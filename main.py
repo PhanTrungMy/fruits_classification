@@ -59,18 +59,18 @@ kcal = [71, 52, 57, 57, 57, 63, 52, 52, 52, 72,
         35, 57, 46, 57, 50, 50, 60, 46, 53, 77,
         32, 47
    ]
-label_data = np.load("label_data1.npy")
-label_name = np.load("label_name1.npy")
-data = np.load("data1.npy")
-model = load_model("models.h5")
+label_data = np.load("label_data.npy")
+label_name = np.load("label_name.npy")
+data = np.load("data.npy")
+model = load_model("model_CNN_1.h5")
 path_img = st.file_uploader("Choose an Image", type=["jpg", "png"])
 if path_img is not None:
     image_bytes = path_img.read()
     nparr = np.frombuffer(image_bytes, np.uint8)
     image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    resized_image = cv2.resize(image, (10, 10))
+    resized_image = cv2.resize(image, (50, 50))
     normalized_image = resized_image.astype('float32') / 255
-    reshaped_image = normalized_image.reshape((1, 10, 10, 3))
+    reshaped_image = normalized_image.reshape((1, 50, 50, 3))
     result = model.predict(reshaped_image)
     result = np.round(result, 2)
     result = result[0]

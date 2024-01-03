@@ -16,16 +16,16 @@ from keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
 from sklearn.metrics import confusion_matrix
 img_array = []
-label_data = np.load("label_data_basic.npy")
+label_data = np.load("label_data.npy")
 print(label_data.shape)
-label_name = np.load("label_name_basic.npy")
+label_name = np.load("label_name.npy")
 print(label_name.shape)
-data = np.load("data_basic.npy")
+data = np.load("data.npy")
 print(data.shape)
 labelncoder = LabelEncoder()
 label_data = labelncoder.fit_transform(label_data)
 label_data = to_categorical(label_data, 52)
-data = np.load("data_basic.npy")
+data = np.load("data.npy")
 data = np.array(data)
 data = data/255
 
@@ -46,7 +46,7 @@ opt = SGD(learning_rate = learning_rate, momentum= 0.9)
 models.compile(loss='categorical_crossentropy', metrics=["accuracy"], optimizer= opt)
 models.summary()
 
-history = models.fit(x_train, y_train, validation_split= 0.1, epochs=10, batch_size=64)
+history = models.fit(x_train, y_train, validation_split= 0.1, epochs=3, batch_size=64)
 test_loss, test_accuracy = models.evaluate(x_train, y_train)
 print(f'Test Accuracy: {test_accuracy * 100:.2f}%')
 test_loss, test_accuracy = models.evaluate(x_test, y_test)

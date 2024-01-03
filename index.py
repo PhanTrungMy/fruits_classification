@@ -6,7 +6,7 @@ import numpy as np
 import os
 import pandas as pd
 
-st.title("Fruits🍅 Classification")
+st.title("🍅 ")
 
 df_confidence = pd.DataFrame(columns=['Fruit', 'Confidence'])
 if 'stored_data' not in st.session_state:
@@ -46,7 +46,7 @@ def update_stored_data_table():
         st.sidebar.write(stored_df)
         
 Enter_kcal = st.number_input("Enter Kcal you need:", min_value=0, value=None)
-st.write('Your chosen kcal is', Enter_kcal, 'kcal')
+st.write('Your chosen calories is', Enter_kcal, 'Calories')
 img_array = []
 path_img = r"D:\DATA\text"
 for file in os.listdir(path_img):
@@ -73,10 +73,10 @@ shopping_link = {
     'yali pear': 'https://www.bachhoaxanh.com/trai-cay-tuoi-ngon/le-hoang-kim-1kg?preFreshType=normal',  
 }
 
-label_data = np.load("label_data_new.npy")
-label_name = np.load("label_name_new.npy")
-data = np.load("data_new.npy")
-model = load_model("model_new1.h5")
+label_data = np.load("label_data_2.npy")
+label_name = np.load("label_name_2.npy")
+data = np.load("data_2.npy")
+model = load_model("model_CNN_2.h5")
 
 path_img = st.file_uploader("Choose an Image", type=["jpg", "png"])
 
@@ -84,9 +84,9 @@ if path_img is not None:
     image_bytes = path_img.read()
     nparr = np.frombuffer(image_bytes, np.uint8)
     image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    resized_image = cv2.resize(image, (10, 10))
+    resized_image = cv2.resize(image, (50, 50))
     normalized_image = resized_image.astype('float32') / 255
-    reshaped_image = normalized_image.reshape((1, 10, 10, 3))
+    reshaped_image = normalized_image.reshape((1, 50, 50, 3))
     result = model.predict(reshaped_image)
     result = np.round(result, 2)
     result = result[0]
@@ -101,7 +101,7 @@ if path_img is not None:
             st.image(image_bytes, width=400)
             # st.success(f'**Predicted Label:** {label_name[verify_result]}',)
             fruit_prediction = label_name[verify_result]
-            st.success(f'**Predicted Label:** {fruit_prediction}')
+            st.success(f'**Nhẫn dự đoán:** {fruit_prediction}')
             # hiển thị thông tin dữ liệu
             selected_data = {
                 'Fruit': label_name[verify_result],
